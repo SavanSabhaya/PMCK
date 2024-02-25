@@ -33,6 +33,7 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
       : super(key: key) {
     if (resID != null) {
       controller.setRes(resID!);
+      controller.getCategorylist(resID.toString());
     }
   }
 
@@ -71,14 +72,14 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
     ]);
   }
 
-  RxList menu = [
-    {"name": "Promotions", "index": 4, "value": true.obs},
-    {"name": "Breakfast", "index": 0, "value": false.obs},
-    {"name": "Starter", "index": 5, "value": false.obs},
-    {"name": "Lunch", "index": 1, "value": false.obs},
-    {"name": "Dinner", "index": 2, "value": false.obs},
-    {"name": "Dessert", "index": 3, "value": false.obs}
-  ].obs;
+  // RxList menu = [
+  //   {"name": "Promotions", "index": 4, "value": true.obs},
+  //   {"name": "Breakfast", "index": 0, "value": false.obs},
+  //   {"name": "Starter", "index": 5, "value": false.obs},
+  //   {"name": "Lunch", "index": 1, "value": false.obs},
+  //   {"name": "Dinner", "index": 2, "value": false.obs},
+  //   {"name": "Dessert", "index": 3, "value": false.obs}
+  // ].obs;
   RxInt? ind = 0.obs;
   showDialogIfFirstLoaded(BuildContext context) async {
     Api api = Api();
@@ -495,15 +496,21 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
-                                itemCount: menu.length,
+                                itemCount:
+                                    controller.categoryListModel.data?.length ??
+                                        0,
                                 itemBuilder: (context, i) {
                                   return Obx(() => GestureDetector(
                                         onTap: () {
                                           if (i != ind!.value) {
                                             ind!.value = i;
 
-                                            controller
-                                                .updateOpen(menu[i]["name"]);
+                                            controller.updateOpen(controller
+                                                    .categoryListModel
+                                                    .data?[i]
+                                                    .name
+                                                    .toString() ??
+                                                '');
                                           }
                                           print(ind);
                                         },
@@ -533,7 +540,10 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                 )),
                                             child: Center(
                                                 child: GlobalText(
-                                              menu[i]["name"],
+                                              controller.categoryListModel
+                                                      .data?[i].name
+                                                      .toString() ??
+                                                  '',
                                               fontSize: 15.sp,
                                               color: Colors.white,
                                               fontWeight: FontWeight.w600,

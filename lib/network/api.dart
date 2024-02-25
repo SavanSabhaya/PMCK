@@ -11,6 +11,7 @@ import 'package:pmck/model/favourites_model.dart';
 import 'package:pmck/model/news_model.dart';
 import 'package:pmck/model/offer_model.dart';
 import 'package:pmck/model/order_history.dart';
+import 'package:pmck/model/orders/category.dart';
 import 'package:pmck/model/orders/orderCallback.dart';
 import 'package:pmck/model/orders/order_model.dart';
 import 'package:pmck/model/orders/return_order.dart';
@@ -1607,4 +1608,26 @@ class Api {
   bool emptyBody(String body) => (body != "");
 
   bool success(String status) => (status == "S");
+
+
+
+
+  static Future<CategoryListModel> categoryListApi(String id) async {
+    Map<String, String> headers = {'Authorization': basicAuth};
+
+    Map<String, dynamic> body = {"action": "GET_CATEGORY_BY_RES", "restaurant_id": id};
+
+    print("View categoryListApi Body ---> ${json.encode(body)}");
+
+    Response response = await post(
+      url,
+      headers: headers,
+      body: json.encode(body),
+    );
+    print("View categoryListApi Data");
+    print(response.body);
+    print(response.statusCode);
+
+    return CategoryListModel.fromJson(jsonDecode(response.body));
+  }
 }

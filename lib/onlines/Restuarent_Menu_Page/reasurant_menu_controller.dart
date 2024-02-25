@@ -1,8 +1,10 @@
 // ignore_for_file: list_remove_unrelated_type
 
+import 'package:flutter/foundation.dart';
 import 'package:pmck/model/bag_model.dart';
 import 'package:pmck/model/cart.dart';
 import 'package:pmck/model/dish_catergory.dart';
+import 'package:pmck/model/orders/category.dart';
 import 'package:pmck/model/orders/items.dart';
 import 'package:pmck/model/restaurants_model.dart';
 import 'package:pmck/network/api.dart';
@@ -12,6 +14,7 @@ class ReasurantMenuController extends GetxController {
   var dishCategories = <DishCategory>[].obs;
 
   RxBool tempNoStorehit = false.obs;
+  CategoryListModel categoryListModel = CategoryListModel();
   int? tempIndex;
   String? tempName;
   var tempDish = <DishCategory>[];
@@ -43,6 +46,12 @@ class ReasurantMenuController extends GetxController {
     update();
   }
 
+  Future<void> getCategorylist(String id) async {
+    categoryListModel = await Api.categoryListApi(id);
+    print('savan get list ++++++++>${categoryListModel.data?.length}');
+    update();
+  }
+
   void compareCartToItems() {
     cart.value.items ??= [];
 
@@ -65,6 +74,7 @@ class ReasurantMenuController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    // getCategorylist();
     var storageCart = storage.getCart();
     if (storageCart != null) {
       cart.value = storageCart;
