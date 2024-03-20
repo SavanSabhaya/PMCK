@@ -907,7 +907,8 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                                       .builder(
                                                                           physics:
                                                                               const NeverScrollableScrollPhysics(),
-                                                                          padding: const EdgeInsets.fromLTRB(
+                                                                          padding: const EdgeInsets
+                                                                              .fromLTRB(
                                                                               0,
                                                                               7,
                                                                               0,
@@ -931,95 +932,97 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                                                   ),
                                                                                 ),
                                                                                 ListView.builder(
-                                                                                    physics: const NeverScrollableScrollPhysics(),
-                                                                                    padding: const EdgeInsets.fromLTRB(0, 7, 0, 0),
-                                                                                    shrinkWrap: true,
-                                                                                    itemCount: add.value.data![index4].addons!.length,
-                                                                                    itemBuilder: (context, index3) {
-                                                                                      if (a.contains(int.parse(add.value.data![index4].addons![index3].id.toString()))) {
-                                                                                        add.value.data![index4].addons![index3].checked!.value = true;
-                                                                                      }
-                                                                                      return Row(
-                                                                                        children: [
-                                                                                          Obx(
-                                                                                            () => Checkbox(
-                                                                                              checkColor: Colors.white,
-                                                                                              activeColor: Colors.red,
-                                                                                              value: add.value.data![index4].addons![index3].checked!.value,
-                                                                                              onChanged: (bool? value) {
-                                                                                                print(value!);
-                                                                                                add.value.data![index4].addons![index3].checked!.value = value;
-                                                                                                //print(add.value.data![index4].addons![index3].checked);
-                                                                                                if (value == true) {
-                                                                                                  total3 = total3! + int.parse(add.value.data![index4].addons![index3].cost.toString());
-                                                                                                  amount.value += int.parse(add.value.data![index4].addons![index3].cost.toString());
-                                                                                                  // print(controller.cart.value.items![0].itemId);
-                                                                                                  //controller.addCount(index);
-                                                                                                  int a = index4;
-                                                                                                  addons.add({index4: index3});
-                                                                                                  print(addons);
-                                                                                                  print(index3);
+                                                                                  physics: const NeverScrollableScrollPhysics(),
+                                                                                  padding: const EdgeInsets.fromLTRB(0, 7, 0, 0),
+                                                                                  shrinkWrap: true,
+                                                                                  itemCount: add.value.data![index4].addons!.length,
+                                                                                  itemBuilder: (context, index3) {
+                                                                                    if (a.contains(int.parse(add.value.data![index4].addons![index3].id.toString()))) {
+                                                                                      add.value.data![index4].addons![index3].checked!.value = true;
+                                                                                    }
 
-                                                                                                  //controller.updateCart2(bagItem, count.value);
-                                                                                                }
-                                                                                                if (value == false) {
-                                                                                                  print(index4);
-                                                                                                  print(index3);
-                                                                                                  for (int i = 0; i < addons.length; i++) {
-                                                                                                    for (var kv in addons[i].entries) {
-                                                                                                      if (kv.key == index4 && kv.value == index3) {
-                                                                                                        addons.removeAt(i);
+                                                                                    return Column(
+                                                                                      children: [
+                                                                                        Row(
+                                                                                          children: [
+                                                                                            Obx(
+                                                                                              () => Checkbox(
+                                                                                                checkColor: Colors.white,
+                                                                                                activeColor: Colors.red,
+                                                                                                value: add.value.data![index4].addons![index3].checked!.value,
+                                                                                                onChanged: (bool? value) {
+                                                                                                  if (value == true) {
+                                                                                                    // Check if another checkbox is already selected in this list
+                                                                                                    bool otherChecked = add.value.data![index4].addons!.any((element) => element.checked!.value && element.id != add.value.data![index4].addons![index3].id);
+
+                                                                                                    if (otherChecked) {
+                                                                                                      Get.snackbar("Aleart", "You can only select one option from this list.");
+
+                                                                                                      return;
+                                                                                                    }
+
+                                                                                                    add.value.data![index4].addons![index3].checked!.value = value!;
+                                                                                                    total3 = total3! + int.parse(add.value.data![index4].addons![index3].cost.toString());
+                                                                                                    amount.value += int.parse(add.value.data![index4].addons![index3].cost.toString());
+                                                                                                    int a = index4;
+                                                                                                    addons.add({index4: index3});
+                                                                                                  } else {
+                                                                                                    // Unselect the checkbox
+                                                                                                    add.value.data![index4].addons![index3].checked!.value = value!;
+                                                                                                    for (int i = 0; i < addons.length; i++) {
+                                                                                                      for (var kv in addons[i].entries) {
+                                                                                                        if (kv.key == index4 && kv.value == index3) {
+                                                                                                          addons.removeAt(i);
+                                                                                                        }
+                                                                                                      }
+                                                                                                    }
+                                                                                                    amount.value -= int.parse(add.value.data![index4].addons![index3].cost.toString());
+                                                                                                    BagModel ind = BagModel(
+                                                                                                      add.value.data![index4].addons![index3].nameOfItem.toString(),
+                                                                                                      1,
+                                                                                                      double.parse(add.value.data![index4].addons![index3].cost.toString()),
+                                                                                                      int.parse(add.value.data![index4].addons![index3].id.toString()),
+                                                                                                      "",
+                                                                                                    );
+                                                                                                    final controller2 = Get.put(MyBagController());
+                                                                                                    for (int i = 0; i < controller2.cart!.value.items!.length; i++) {
+                                                                                                      if (add.value.data![index4].addons![index3].id.toString().contains(controller2.cart!.value.items![i].itemId.toString())) {
+                                                                                                        controller2.removeItem(i);
+                                                                                                        break;
                                                                                                       }
                                                                                                     }
                                                                                                   }
-                                                                                                  print(addons);
-                                                                                                  amount.value -= int.parse(add.value.data![index4].addons![index3].cost.toString());
-                                                                                                  //print(amount.value);
-                                                                                                  BagModel ind = BagModel(add.value.data![index4].addons![index3].nameOfItem.toString(), 1, double.parse(add.value.data![index4].addons![index3].cost.toString()), int.parse(add.value.data![index4].addons![index3].id.toString()), "");
-                                                                                                  print(add.value.data![index4].addons![index3].id.toString());
-
-                                                                                                  final controller2 = Get.put(MyBagController());
-                                                                                                  for (int i = 0; i < controller2.cart!.value.items!.length; i++) {
-                                                                                                    print(controller2.cart!.value.items![i].itemId.toString());
-                                                                                                    if (add.value.data![index4].addons![index3].id.toString().contains(controller2.cart!.value.items![i].itemId.toString())) {
-                                                                                                      print("hi");
-                                                                                                      controller2.removeItem(i);
-                                                                                                      break;
-                                                                                                    }
-                                                                                                  }
-                                                                                                  //print(controller2.cart!.value.items);
-                                                                                                  // controller2.removeItem(int.parse(add.value.data![index].addons![index3].itemAddonId.toString()));
-                                                                                                  // controller.removeCount(int.parse(add.value.data![index].addons![index3].itemAddonId.toString()));
-                                                                                                  // //count.value = 0;
-                                                                                                  // controller.updateCart(ind, 0);
-
-                                                                                                  //amount.value = bagItem.price;
-                                                                                                  //print(controller.cart.value.items);
-                                                                                                }
-                                                                                              },
+                                                                                                },
+                                                                                              ),
                                                                                             ),
-                                                                                          ),
-                                                                                          SizedBox(
-                                                                                            width: MediaQuery.of(context).size.width * 0.75,
-                                                                                            child: Row(
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                              children: [
-                                                                                                Container(
+                                                                                            SizedBox(
+                                                                                              width: MediaQuery.of(context).size.width * 0.75,
+                                                                                              child: Row(
+                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                children: [
+                                                                                                  Container(
                                                                                                     child: Padding(
-                                                                                                  padding: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 10.w),
-                                                                                                  child: GlobalText(add.value.data![index4].addons![index3].nameOfItem.toString(), color: const Color(0xff111c26), fontWeight: FontWeight.w500, fontStyle: FontStyle.normal, fontSize: 15.sp),
-                                                                                                )),
-                                                                                                Container(
+                                                                                                      padding: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 10.w),
+                                                                                                      child: GlobalText(add.value.data![index4].addons![index3].nameOfItem.toString(), color: const Color(0xff111c26), fontWeight: FontWeight.w500, fontStyle: FontStyle.normal, fontSize: 15.sp),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  Container(
                                                                                                     child: Padding(
-                                                                                                  padding: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 10.w),
-                                                                                                  child: GlobalText("R${double.parse(add.value.data![index4].addons![index3].cost!).toStringAsFixed(2)}", color: const Color(0xff111c26), fontWeight: FontWeight.w500, fontStyle: FontStyle.normal, fontSize: 15.sp),
-                                                                                                )),
-                                                                                              ],
+                                                                                                      padding: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 10.w),
+                                                                                                      child: GlobalText("R${double.parse(add.value.data![index4].addons![index3].cost!).toStringAsFixed(2)}", color: const Color(0xff111c26), fontWeight: FontWeight.w500, fontStyle: FontStyle.normal, fontSize: 15.sp),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
                                                                                             ),
-                                                                                          ),
-                                                                                        ],
-                                                                                      );
-                                                                                    })
+                                                                                          ],
+                                                                                        ),
+                                                                                        // Divider or any other widget to separate each item
+                                                                                        // You can add Divider(height: 1) here for example
+                                                                                      ],
+                                                                                    );
+                                                                                  },
+                                                                                )
                                                                               ],
                                                                             );
                                                                           }),
@@ -1325,6 +1328,8 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                     CrossAxisAlignment.center,
                                                 children: [
                                                   Container(
+                                                      height: 100.h,
+                                                      width: 100.w,
                                                       margin: EdgeInsets.only(
                                                           left: 19.w,
                                                           top: 15.h,
