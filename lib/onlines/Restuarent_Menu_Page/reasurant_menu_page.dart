@@ -1129,150 +1129,182 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                                 highlightColor:
                                                                     Colors
                                                                         .transparent,
-                                                                onTap: () {
-                                                                  if (controller
+                                                                onTap:
+                                                                    () async {
+                                                                  final cartController =
+                                                                      Get.find<
+                                                                          ReasurantMenuController>();
+
+                                                                  if (cartController
                                                                       .cart
                                                                       .value
                                                                       .items!
                                                                       .isEmpty) {
-                                                                    if (count
-                                                                            .value >
-                                                                        0) {
-                                                                      //controller.addToCart2(bagItem, 1, controller.resid, 10);
-                                                                      print(bagItem
-                                                                          .id);
-
-                                                                      controller
-                                                                          .addCount(
-                                                                              0);
-                                                                      controller.addToCart(
+                                                                    if (count.value >
+                                                                            0 &&
+                                                                        addons
+                                                                            .isNotEmpty) {
+                                                                      cartController.addToCart(
                                                                           bagItem,
                                                                           count
                                                                               .value,
                                                                           controller
                                                                               .resid);
-                                                                      //controller.cart.value.subTotal=double.parse(amount.toString());
                                                                     }
-                                                                    print(
-                                                                        "hii");
-                                                                    print(addons
-                                                                        .length);
-                                                                    // if (addons.isNotEmpty) {
-                                                                    //   for (int i = 0; i < addons.length; i+=2) {
-                                                                    //     controller.addToCart2(bagItem, 1, controller.resid, double.parse(add.value.data![i].addons![i+1].cost.toString()), add.value.data![i].addons![i+1].nameOfItem.toString(), int.parse(add.value.data![i].addons![i+1].itemAddonId.toString()));
-                                                                    //   }
-                                                                    // }
+
                                                                     if (addons
-                                                                        .isNotEmpty) {
-                                                                      for (int i =
-                                                                              0;
-                                                                          i < addons.length;
-                                                                          i++) {
-                                                                        for (var kv
-                                                                            in addons[i].entries) {
-                                                                          print(add
-                                                                              .value
-                                                                              .data![kv.key]
-                                                                              .addons![kv.value]
-                                                                              .cost
-                                                                              .toString());
-                                                                          controller.addToCart2(
-                                                                              bagItem,
-                                                                              1,
-                                                                              controller.resid,
-                                                                              double.parse(add.value.data![kv.key].addons![kv.value].cost.toString()),
-                                                                              add.value.data![kv.key].addons![kv.value].nameOfItem.toString(),
-                                                                              int.parse(add.value.data![kv.key].addons![kv.value].id.toString()));
-                                                                        }
-                                                                      }
+                                                                        .isEmpty) {
+                                                                      Get.snackbar(
+                                                                          'Alert',
+                                                                          'Please select at least one addon to proceed.');
+                                                                      print(
+                                                                          '12===>');
+                                                                      return; // Return here to prevent further execution
                                                                     }
-                                                                    Get.back();
 
-                                                                    return;
-                                                                  }
-                                                                  //bagItem.price=bagItem.price+num.parse(total3.toString());
-                                                                  //controller.addToCart2(bagItem, 1, controller.resid, 10);
-                                                                  // if (addons.isNotEmpty) {
-                                                                  //   for (int i = 0; i < addons.length; i += 2) {
-                                                                  //     controller.addToCart2(bagItem, 1, controller.resid, double.parse(add.value.data![i].addons![i + 1].cost.toString()), add.value.data![i].addons![i + 1].nameOfItem.toString(), int.parse(add.value.data![i].addons![i + 1].itemAddonId.toString()));
-                                                                  //   }
-                                                                  // }
-                                                                  print(
-                                                                      "hiiii");
-                                                                  print(addons
-                                                                      .length);
-                                                                  controller.updateCart(
-                                                                      bagItem,
-                                                                      count
-                                                                          .value);
-                                                                  controller
-                                                                      .addCount(
-                                                                          0);
-
-                                                                  //bagItem.price=bagItem.price+num.parse(total3.toString());
-                                                                  // controller.addToCart2(bagItem, 1, controller.resid, 10);
-                                                                  if (addons
-                                                                      .isNotEmpty) {
-                                                                    for (int i =
-                                                                            0;
-                                                                        i < addons.length;
-                                                                        i++) {
+                                                                    for (var addon
+                                                                        in addons) {
                                                                       for (var kv
-                                                                          in addons[i]
+                                                                          in addon
                                                                               .entries) {
-                                                                        print(add
+                                                                        final addonIndex =
+                                                                            kv.key;
+                                                                        final addonValue =
+                                                                            kv.value;
+                                                                        final addonCost = double.parse(add
                                                                             .value
-                                                                            .data![kv.key]
-                                                                            .addons![kv.value]
+                                                                            .data![addonIndex]
+                                                                            .addons![addonValue]
                                                                             .cost
                                                                             .toString());
-                                                                        controller.updateCart2(
+                                                                        final addonName = add
+                                                                            .value
+                                                                            .data![addonIndex]
+                                                                            .addons![addonValue]
+                                                                            .nameOfItem
+                                                                            .toString();
+                                                                        final addonId = int.parse(add
+                                                                            .value
+                                                                            .data![addonIndex]
+                                                                            .addons![addonValue]
+                                                                            .id
+                                                                            .toString());
+
+                                                                        cartController.addToCart2(
                                                                             bagItem,
                                                                             1,
                                                                             controller.resid,
-                                                                            double.parse(add.value.data![kv.key].addons![kv.value].cost.toString()),
-                                                                            add.value.data![kv.key].addons![kv.value].nameOfItem.toString(),
-                                                                            int.parse(add.value.data![kv.key].addons![kv.value].id.toString()));
+                                                                            addonCost,
+                                                                            addonName,
+                                                                            addonId);
                                                                       }
                                                                     }
+
+                                                                    Get.back();
+                                                                  } else {
+                                                                    if (addons
+                                                                        .isEmpty) {
+                                                                      Get.snackbar(
+                                                                          'Alert',
+                                                                          'Please select at least one addon to proceed.');
+                                                                      print(
+                                                                          '34===>');
+                                                                      return; // Return here to prevent further execution
+                                                                    }
+
+                                                                    cartController.updateCart(
+                                                                        bagItem,
+                                                                        count
+                                                                            .value);
+
+                                                                    for (var addon
+                                                                        in addons) {
+                                                                      for (var kv
+                                                                          in addon
+                                                                              .entries) {
+                                                                        final addonIndex =
+                                                                            kv.key;
+                                                                        final addonValue =
+                                                                            kv.value;
+                                                                        final addonCost = double.parse(add
+                                                                            .value
+                                                                            .data![addonIndex]
+                                                                            .addons![addonValue]
+                                                                            .cost
+                                                                            .toString());
+                                                                        final addonName = add
+                                                                            .value
+                                                                            .data![addonIndex]
+                                                                            .addons![addonValue]
+                                                                            .nameOfItem
+                                                                            .toString();
+                                                                        final addonId = int.parse(add
+                                                                            .value
+                                                                            .data![addonIndex]
+                                                                            .addons![addonValue]
+                                                                            .id
+                                                                            .toString());
+
+                                                                        cartController.updateCart2(
+                                                                            bagItem,
+                                                                            1,
+                                                                            controller.resid,
+                                                                            addonCost,
+                                                                            addonName,
+                                                                            addonId);
+                                                                      }
+                                                                    }
+
+                                                                    Get.back();
                                                                   }
-
-                                                                  // controller.cart.value.subTotal=double.parse(amount.toString());
-
-                                                                  Get.back();
                                                                 },
                                                                 child:
                                                                     Container(
-                                                                        height:
-                                                                            62.131
-                                                                                .h,
-                                                                        alignment:
-                                                                            Alignment
-                                                                                .center,
-                                                                        // ignore: sort_child_properties_last
-                                                                        child: GlobalText(
-                                                                            "ADD TO CART",
-                                                                            color:
-                                                                                const Color(0xffffffff),
-                                                                            fontWeight: FontWeight.w700,
-                                                                            fontStyle: FontStyle.normal,
-                                                                            fontSize: 18.sp),
-                                                                        decoration: BoxDecoration(
-                                                                            borderRadius: BorderRadius.circular(5.r),
-                                                                            gradient: const LinearGradient(
-                                                                              colors: [
-                                                                                Color(0xfffe7500),
-                                                                                Color(0xffe41b00)
-                                                                              ],
-                                                                              stops: [
-                                                                                0,
-                                                                                1
-                                                                              ],
-                                                                              begin: Alignment(-1.00, 0.00),
-                                                                              end: Alignment(1.00, -0.00),
-                                                                              // angle: 90,
-                                                                              // scale: undefined,
-                                                                            ))),
+                                                                  height:
+                                                                      62.131.h,
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            5.r),
+                                                                    gradient:
+                                                                        const LinearGradient(
+                                                                      colors: [
+                                                                        Color(
+                                                                            0xfffe7500),
+                                                                        Color(
+                                                                            0xffe41b00)
+                                                                      ],
+                                                                      stops: [
+                                                                        0,
+                                                                        1
+                                                                      ],
+                                                                      begin: Alignment(
+                                                                          -1.00,
+                                                                          0.00),
+                                                                      end: Alignment(
+                                                                          1.00,
+                                                                          -0.00),
+                                                                    ),
+                                                                  ),
+                                                                  child:
+                                                                      GlobalText(
+                                                                    "ADD TO CART",
+                                                                    color: const Color(
+                                                                        0xffffffff),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .normal,
+                                                                    fontSize:
+                                                                        18.sp,
+                                                                  ),
+                                                                ),
                                                               ),
                                                             )
                                                           ]),
