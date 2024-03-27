@@ -5,6 +5,8 @@ class Item {
   late double price = 0;
   double? hiddenPrice = 0;
   int totalItems = 0;
+  late dynamic catorgoryId;
+  String? isFromAddons = '';
 
   Item({
     required this.name,
@@ -12,6 +14,8 @@ class Item {
     required this.qantity,
     required this.price,
     this.hiddenPrice,
+    this.catorgoryId,
+    this.isFromAddons,
   }) {
     hiddenPrice = (price * qantity);
   }
@@ -23,6 +27,7 @@ class Item {
     data['qantity'] = qantity;
     data['price'] = price;
     data['hiddenPrice'] = hiddenPrice;
+    data['category_id'] = catorgoryId;
     return data;
   }
 
@@ -32,5 +37,6 @@ class Item {
     qantity = json['qantity'] as int;
     price = json['price'] as double;
     hiddenPrice = json['hiddenPrice'] as double;
+    catorgoryId = json['category_id'];
   }
 }

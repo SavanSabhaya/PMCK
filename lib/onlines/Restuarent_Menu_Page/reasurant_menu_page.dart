@@ -907,8 +907,7 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                                       .builder(
                                                                           physics:
                                                                               const NeverScrollableScrollPhysics(),
-                                                                          padding: const EdgeInsets
-                                                                              .fromLTRB(
+                                                                          padding: const EdgeInsets.fromLTRB(
                                                                               0,
                                                                               7,
                                                                               0,
@@ -952,45 +951,33 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                                                                 value: add.value.data![index4].addons![index3].checked!.value,
                                                                                                 onChanged: (bool? value) {
                                                                                                   if (value == true) {
-                                                                                                    // Check if another checkbox is already selected in this list
-                                                                                                    bool otherChecked = add.value.data![index4].addons!.any((element) => element.checked!.value && element.id != add.value.data![index4].addons![index3].id);
-
-                                                                                                    if (otherChecked) {
-                                                                                                      Get.snackbar("Aleart", "You can only select one option from this list.");
-
-                                                                                                      return;
+                                                                                                    // Uncheck all other checkboxes in the list
+                                                                                                    for (var addon in add.value.data![index4].addons!) {
+                                                                                                      addon.checked!.value = false;
                                                                                                     }
 
-                                                                                                    add.value.data![index4].addons![index3].checked!.value = value!;
-                                                                                                    total3 = total3! + int.parse(add.value.data![index4].addons![index3].cost.toString());
-                                                                                                    amount.value += int.parse(add.value.data![index4].addons![index3].cost.toString());
-                                                                                                    int a = index4;
+                                                                                                    // Check the current checkbox
+                                                                                                    add.value.data![index4].addons![index3].checked!.value = true;
+
+                                                                                                    // Update addons list with the current selection
+                                                                                                    addons.clear();
                                                                                                     addons.add({index4: index3});
+                                                                                                    // Update total and amount
+                                                                                                    total3 = total3! + int.parse(add.value.data![index4].addons![index3].cost.toString());
+                                                                                                    amount.value = total3 as double;
                                                                                                   } else {
                                                                                                     // Unselect the checkbox
-                                                                                                    add.value.data![index4].addons![index3].checked!.value = value!;
-                                                                                                    for (int i = 0; i < addons.length; i++) {
-                                                                                                      for (var kv in addons[i].entries) {
-                                                                                                        if (kv.key == index4 && kv.value == index3) {
-                                                                                                          addons.removeAt(i);
-                                                                                                        }
-                                                                                                      }
-                                                                                                    }
-                                                                                                    amount.value -= int.parse(add.value.data![index4].addons![index3].cost.toString());
-                                                                                                    BagModel ind = BagModel(
-                                                                                                      add.value.data![index4].addons![index3].nameOfItem.toString(),
-                                                                                                      1,
-                                                                                                      double.parse(add.value.data![index4].addons![index3].cost.toString()),
-                                                                                                      int.parse(add.value.data![index4].addons![index3].id.toString()),
-                                                                                                      "",
-                                                                                                    );
+                                                                                                    add.value.data![index4].addons![index3].checked!.value = false;
+
+                                                                                                    // Remove the item from the addons list
+                                                                                                    addons.removeWhere((item) => item[index4] == index3);
+
+                                                                                                    // Remove the item from the bag if it exists
                                                                                                     final controller2 = Get.put(MyBagController());
-                                                                                                    for (int i = 0; i < controller2.cart!.value.items!.length; i++) {
-                                                                                                      if (add.value.data![index4].addons![index3].id.toString().contains(controller2.cart!.value.items![i].itemId.toString())) {
-                                                                                                        controller2.removeItem(i);
-                                                                                                        break;
-                                                                                                      }
-                                                                                                    }
+                                                                                                    controller2.cart!.value.items!.removeWhere((item) => item.itemId == int.parse(add.value.data![index4].addons![index3].id.toString()));
+                                                                                                    // Update total and amount
+                                                                                                    total3 = 0 as RxInt?;
+                                                                                                    amount.value = total3 as double;
                                                                                                   }
                                                                                                 },
                                                                                               ),

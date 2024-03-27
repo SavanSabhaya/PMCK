@@ -41,11 +41,12 @@ class MyBagController extends GetxController {
   }
 
   void removeBagItem(Item data) {
-    cart!.value.items!.remove(data);
+  
+    cart!.value.items!.removeWhere((element) => element.itemId == data.itemId);
     cart!.value.updateSubTotal();
 
-    rest.cart.value.items!
-        .removeWhere((element) => element.itemId == data.itemId);
+    // rest.cart.value.items!
+    //     .removeWhere((element) => element.itemId == data.itemId);
 
     if (rest.cart.value.items!.isEmpty) {
       rest.cart.value = Cart();

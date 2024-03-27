@@ -207,12 +207,7 @@ class MyBagScreen extends GetView<MyBagController> {
                                                                 Colors
                                                                     .transparent,
                                                             onTap: () {
-                                                              controller.removeBagItem(
-                                                                  controller
-                                                                          .cart!
-                                                                          .value
-                                                                          .items![
-                                                                      index]);
+                                                              controller.removeBagItem(controller.cart!.value.items![index]);
                                                             },
                                                             child: Container(
                                                                 margin: EdgeInsets
@@ -265,158 +260,166 @@ class MyBagScreen extends GetView<MyBagController> {
                                     ),
                                   )
                                 : Container(),
-                       
                       ]),
                     ),
                   ),
-                  SizedBox(height:10.h),
+                  SizedBox(height: 10.h),
                   InkWell(
                     highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
                     onTap: () {
-                    
-                              TextEditingController notes=TextEditingController();
-                              showGeneralDialog(
-  context: context,
-  barrierColor: Colors.white, // Background color
-  barrierDismissible: false,
-  barrierLabel: 'Dialog',
-  transitionDuration: Duration(milliseconds: 400),
-  pageBuilder: (_, __, ___) {
-    return SafeArea(
-      child: Scaffold(
-        appBar:    appBar("FOOD NOTES", false, () => Get.back()),
-        
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
+                      TextEditingController notes = TextEditingController();
+                      showGeneralDialog(
+                          context: context,
+                          barrierColor: Colors.white, // Background color
+                          barrierDismissible: false,
+                          barrierLabel: 'Dialog',
+                          transitionDuration: Duration(milliseconds: 400),
+                          pageBuilder: (_, __, ___) {
+                            return SafeArea(
+                              child: Scaffold(
+                                appBar: appBar(
+                                    "FOOD NOTES", false, () => Get.back()),
+                                body: SingleChildScrollView(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
                                             margin: EdgeInsets.only(
-                                                top: 19.h,
-                                              
-                                                bottom: 23.h),
+                                                top: 19.h, bottom: 23.h),
                                             child: GlobalText("Notes",
                                                 color: const Color(0xff111c26),
                                                 fontWeight: FontWeight.w700,
                                                 fontStyle: FontStyle.normal,
                                                 fontSize: 20.sp)),
-             Container(
+                                        Container(
                                             margin: EdgeInsets.only(
-                                                top: 19.h,
-                                               
-                                                bottom: 23.h),
-                                            child: GlobalText("Please enter any information you would like us to know about your order below",
+                                                top: 19.h, bottom: 23.h),
+                                            child: GlobalText(
+                                                "Please enter any information you would like us to know about your order below",
                                                 color: const Color(0xff111c26),
                                                 fontWeight: FontWeight.w700,
                                                 fontStyle: FontStyle.normal,
-                                                fontSize: 15.sp)),Container(
+                                                fontSize: 15.sp)),
+                                        Container(
                                             margin: EdgeInsets.only(
-                                                top: 19.h,
-                                              
-                                                bottom: 23.h),
+                                                top: 19.h, bottom: 23.h),
                                             child: GlobalText("Notes for food",
                                                 color: const Color(0xff111c26),
                                                 fontWeight: FontWeight.w700,
                                                 fontStyle: FontStyle.normal,
                                                 fontSize: 20.sp)),
-                                                Container(
-              margin: EdgeInsets.symmetric(horizontal: 0.w),
-              child: TextFormField(
-          controller: notes,
-          autofocus: false,
-          maxLines: 10,
-          textInputAction: TextInputAction.done,
-          style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.w500,
-              fontStyle: FontStyle.normal,
-              fontSize: 16.sp),
-          textAlign: TextAlign.start,
-          keyboardType: TextInputType.text,
-          obscureText: false,
-          cursorColor: Colors.black,
-          onChanged: (value) {
-            controller.cart!.value.deliverynotes.value=value;
+                                        Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 0.w),
+                                            child: TextFormField(
+                                              controller: notes,
+                                              autofocus: false,
+                                              maxLines: 10,
+                                              textInputAction:
+                                                  TextInputAction.done,
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontSize: 16.sp),
+                                              textAlign: TextAlign.start,
+                                              keyboardType: TextInputType.text,
+                                              obscureText: false,
+                                              cursorColor: Colors.black,
+                                              onChanged: (value) {
+                                                controller
+                                                    .cart!
+                                                    .value
+                                                    .deliverynotes
+                                                    .value = value;
 
-            print( controller.cart!.value.deliverynotes.value);
-          },
-          minLines: 7,
-          decoration: InputDecoration(
-            isDense: true,
-            border: true
-                ? UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 1.w),
-                  )
-                : InputBorder.none,
-            contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 17.h),
-            hintStyle: TextStyle(
-                color: const Color(0xff888e94),
-                fontWeight: FontWeight.w500,
-                fontStyle: FontStyle.normal,
-                fontSize: 16.sp),
-            hintText: "Type Here...",
-          ),
-              )),
-        SizedBox(height:15.h),
-                                               
-                   GestureDetector(
-                                onTap: () async {
-                              
-                              
-                                 Navigator.pop(context);
-                            
-                    },
-                    child:  Container(
-                                    height: 59.h,
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 37.w),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5.r),
-                                        gradient: const LinearGradient(
-                                          colors: [
-                                            Color(0xfffe7500),
-                                            Color(0xffe41b00)
-                                          ],
-                                          stops: [0, 1],
-                                          begin: Alignment(-1.00, 0.00),
-                                          end: Alignment(1.00, -0.00),
-                                          // angle: 90,
-                                          // scale: undefined,
-                                        )),
-                                    alignment: Alignment.center,
-                                    child: GlobalText("Confirm",
-                                            color: const Color(0xffffffff),
-                                            fontWeight: FontWeight.w900,
-                                            fontStyle: FontStyle.normal,
-                                            fontSize: 20.sp)),
-                              ),
-                
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  });},child:
-                                              Container(
-                         margin: EdgeInsets.only(
-                                         
-                                          left: 25.w,
-                                          right: 25.w,
+                                                print(controller.cart!.value
+                                                    .deliverynotes.value);
+                                              },
+                                              minLines: 7,
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                border: true
+                                                    ? UnderlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.grey,
+                                                            width: 1.w),
+                                                      )
+                                                    : InputBorder.none,
+                                                contentPadding:
+                                                    EdgeInsets.fromLTRB(
+                                                        0, 0, 0, 17.h),
+                                                hintStyle: TextStyle(
+                                                    color:
+                                                        const Color(0xff888e94),
+                                                    fontWeight: FontWeight.w500,
+                                                    fontStyle: FontStyle.normal,
+                                                    fontSize: 16.sp),
+                                                hintText: "Type Here...",
+                                              ),
+                                            )),
+                                        SizedBox(height: 15.h),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Container(
+                                              height: 59.h,
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 37.w),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.r),
+                                                  gradient:
+                                                      const LinearGradient(
+                                                    colors: [
+                                                      Color(0xfffe7500),
+                                                      Color(0xffe41b00)
+                                                    ],
+                                                    stops: [0, 1],
+                                                    begin:
+                                                        Alignment(-1.00, 0.00),
+                                                    end: Alignment(1.00, -0.00),
+                                                    // angle: 90,
+                                                    // scale: undefined,
+                                                  )),
+                                              alignment: Alignment.center,
+                                              child: GlobalText("Confirm",
+                                                  color:
+                                                      const Color(0xffffffff),
+                                                  fontWeight: FontWeight.w900,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontSize: 20.sp)),
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(
+                          left: 25.w,
+                          right: 25.w,
+                        ),
                         height: 59.h,
-                        decoration:  BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
                             gradient: LinearGradient(
-                          colors: [Color(0xffe51f00), Color(0xfffd7200)],
-                          stops: [0, 1],
-                          begin: Alignment(1.00, -0.00),
-                          end: Alignment(-1.00, 0.00),
-                        )),
+                              colors: [Color(0xffe51f00), Color(0xfffd7200)],
+                              stops: [0, 1],
+                              begin: Alignment(1.00, -0.00),
+                              end: Alignment(-1.00, 0.00),
+                            )),
                         alignment: Alignment.center,
                         child: GlobalText("ADD FOOD NOTES",
                             color: const Color(0xffffffff),
@@ -424,77 +427,74 @@ class MyBagScreen extends GetView<MyBagController> {
                             fontStyle: FontStyle.normal,
                             fontSize: 18.sp)),
                   ),
-                   Container(
-                            margin: EdgeInsets.symmetric(
-                                vertical: 16.h, horizontal: 25.w),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GlobalText("Sub Total",
-                                      color: const Color(0xff111c26),
-                                      fontWeight: FontWeight.w700,
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 16.sp),
-                                  GlobalText(
-                                      "R${controller.cart?.value.subTotal.toStringAsFixed(2) ?? "0.00"}",
-                                      color: const Color(0xff111c26),
-                                      fontWeight: FontWeight.w700,
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 16.sp)
-                                ])),
-                        // // Container(
-                        // //     margin: EdgeInsets.only(
-                        // //         bottom: 26.h, left: 25.w, right: 25.w),
-                        // //     child: Row(
-                        // //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        // //         children: [
-                        // //           GlobalText("Delivery Fee",
-                        // //               color: const Color(0xff111c26),
-                        // //               fontWeight: FontWeight.w500,
-                        // //               fontStyle: FontStyle.normal,
-                        // //               fontSize: 16.sp),
-                        // //           GlobalText(
-                        // //               "R${controller.cart?.value.deliveryFee ?? "0.00"} ",
-                        // //               color: const Color(0xffe82800),
-                        // //               fontWeight: FontWeight.w500,
-                        // //               fontStyle: FontStyle.normal,
-                        // //               fontSize: 16.sp)
-                        //         ])),
-                        Container(
-                            height: 1.h,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: const Color(0xffe0e0e0),
-                                    width: 1.w))),
-                        Container(
-                            margin: EdgeInsets.only(
-                                bottom: 26.h,
-                                top: 21.h,
-                                left: 25.w,
-                                right: 25.w),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GlobalText("Total",
-                                      color: const Color(0xff111c26),
-                                      fontWeight: FontWeight.w700,
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 20.sp),
-                                  GlobalText(
-                                      "R${controller.cart?.value.total?.toStringAsFixed(2) ?? "0.00"}",
-                                      color: const Color(0xff111c26),
-                                      fontWeight: FontWeight.w700,
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 20.sp)
-                                ])),
-                                
+                  Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: 16.h, horizontal: 25.w),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GlobalText("Sub Total",
+                                color: const Color(0xff111c26),
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                                fontSize: 16.sp),
+                            GlobalText(
+                                "R${controller.cart?.value.subTotal.toStringAsFixed(2) ?? "0.00"}",
+                                color: const Color(0xff111c26),
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                                fontSize: 16.sp)
+                          ])),
+                  // // Container(
+                  // //     margin: EdgeInsets.only(
+                  // //         bottom: 26.h, left: 25.w, right: 25.w),
+                  // //     child: Row(
+                  // //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // //         children: [
+                  // //           GlobalText("Delivery Fee",
+                  // //               color: const Color(0xff111c26),
+                  // //               fontWeight: FontWeight.w500,
+                  // //               fontStyle: FontStyle.normal,
+                  // //               fontSize: 16.sp),
+                  // //           GlobalText(
+                  // //               "R${controller.cart?.value.deliveryFee ?? "0.00"} ",
+                  // //               color: const Color(0xffe82800),
+                  // //               fontWeight: FontWeight.w500,
+                  // //               fontStyle: FontStyle.normal,
+                  // //               fontSize: 16.sp)
+                  //         ])),
+                  Container(
+                      height: 1.h,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: const Color(0xffe0e0e0), width: 1.w))),
+                  Container(
+                      margin: EdgeInsets.only(
+                          bottom: 26.h, top: 21.h, left: 25.w, right: 25.w),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GlobalText("Total",
+                                color: const Color(0xff111c26),
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                                fontSize: 20.sp),
+                            GlobalText(
+                                "R${controller.cart?.value.total?.toStringAsFixed(2) ?? "0.00"}",
+                                color: const Color(0xff111c26),
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                                fontSize: 20.sp)
+                          ])),
+
                   InkWell(
                     highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
-                    onTap: () {print(controller.cart!.value.deliverynotes);
-                      Get.to(() => CheckOutScreen(dn: controller.cart!.value.deliverynotes.toString(),));
+                    onTap: () {
+                      print(controller.cart!.value.deliverynotes);
+                      Get.to(() => CheckOutScreen(
+                            dn: controller.cart!.value.deliverynotes.toString(),
+                          ));
                     },
                     child: Container(
                         height: 74.h,

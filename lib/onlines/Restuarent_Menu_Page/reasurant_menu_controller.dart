@@ -119,7 +119,8 @@ class ReasurantMenuController extends GetxController {
         name: item.dishName,
         itemId: item.id,
         qantity: quantity,
-        price: item.price);
+        price: item.price,
+        catorgoryId: item.catorgoryId,isFromAddons: 'right');
 
     cart.value.items!.add(newItem);
 
@@ -132,7 +133,7 @@ class ReasurantMenuController extends GetxController {
   void addToCart2(BagModel item, int quantity, int restaurantId, double price,
       String name, int itemid) {
     var newItem =
-        Item(name: name, itemId: itemid, qantity: quantity, price: price);
+        Item(name: name, itemId: item.id, qantity: quantity, price: price,catorgoryId: item.catorgoryId);
 
     cart.value.items!.add(newItem);
 
