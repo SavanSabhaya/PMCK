@@ -1476,6 +1476,7 @@ class Api {
     Map<String, String> headers = {'Authorization': basicAuth};
 
     final jsonValue = data.toJson();
+    print('json.encode(jsonValue)====>${json.encode(jsonValue)}');
 
     final resp =
         await post(url, headers: headers, body: json.encode(jsonValue));

@@ -133,7 +133,7 @@ class ReasurantMenuController extends GetxController {
   void addToCart2(BagModel item, int quantity, int restaurantId, double price,
       String name, int itemid) {
     var newItem =
-        Item(name: name, itemId: item.id, qantity: quantity, price: price,catorgoryId: item.catorgoryId);
+        Item(name: name, itemId: itemid, qantity: quantity, price: price,catorgoryId: item.catorgoryId);
 
     cart.value.items!.add(newItem);
 

@@ -960,7 +960,7 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                                                                     add.value.data![index4].addons![index3].checked!.value = true;
 
                                                                                                     // Update addons list with the current selection
-                                                                                                    addons.clear();
+                                                                                                    // addons.clear();
                                                                                                     addons.add({index4: index3});
                                                                                                     // Update total and amount
                                                                                                     total3 = total3! + int.parse(add.value.data![index4].addons![index3].cost.toString());
@@ -987,10 +987,12 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                                                               child: Row(
                                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                                 children: [
-                                                                                                  Container(
-                                                                                                    child: Padding(
-                                                                                                      padding: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 10.w),
-                                                                                                      child: GlobalText(add.value.data![index4].addons![index3].nameOfItem.toString(), color: const Color(0xff111c26), fontWeight: FontWeight.w500, fontStyle: FontStyle.normal, fontSize: 15.sp),
+                                                                                                  Expanded(
+                                                                                                    child: Container(
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 10.w),
+                                                                                                        child: GlobalText(add.value.data![index4].addons![index3].nameOfItem.toString(), color: const Color(0xff111c26), fontWeight: FontWeight.w500, fontStyle: FontStyle.normal, fontSize: 15.sp, maxLine: 2),
+                                                                                                      ),
                                                                                                     ),
                                                                                                   ),
                                                                                                   Container(
@@ -1133,7 +1135,19 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                                     if (count.value >
                                                                             0 &&
                                                                         addons
-                                                                            .isNotEmpty) {
+                                                                            .isNotEmpty &&
+                                                                        add.value.data!.length !=
+                                                                            0) {
+                                                                      cartController.addToCart(
+                                                                          bagItem,
+                                                                          count
+                                                                              .value,
+                                                                          controller
+                                                                              .resid);
+                                                                    } else if (count.value >
+                                                                            0 &&
+                                                                        addons ==
+                                                                            []) {
                                                                       cartController.addToCart(
                                                                           bagItem,
                                                                           count
@@ -1143,13 +1157,27 @@ class ReasurantMenuScreen extends GetView<ReasurantMenuController> {
                                                                     }
 
                                                                     if (addons
-                                                                        .isEmpty) {
+                                                                            .isEmpty &&
+                                                                        add.value.data!.length !=
+                                                                            0) {
+                                                                      print(
+                                                                          '12==dfdf =>');
                                                                       Get.snackbar(
                                                                           'Alert',
                                                                           'Please select at least one addon to proceed.');
-                                                                      print(
-                                                                          '12===>');
+
                                                                       return; // Return here to prevent further execution
+                                                                    } else if (add
+                                                                            .value
+                                                                            .data!
+                                                                            .length ==
+                                                                        0) {
+                                                                      cartController.addToCart(
+                                                                          bagItem,
+                                                                          count
+                                                                              .value,
+                                                                          controller
+                                                                              .resid);
                                                                     }
 
                                                                     for (var addon

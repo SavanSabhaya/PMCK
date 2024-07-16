@@ -480,7 +480,7 @@ class MyBagScreen extends GetView<MyBagController> {
                                 fontStyle: FontStyle.normal,
                                 fontSize: 20.sp),
                             GlobalText(
-                                "R${controller.cart?.value.total?.toStringAsFixed(2) ?? "0.00"}",
+                                "R${controller.cart?.value.subTotal?.toStringAsFixed(2) ?? "0.00"}",
                                 color: const Color(0xff111c26),
                                 fontWeight: FontWeight.w700,
                                 fontStyle: FontStyle.normal,

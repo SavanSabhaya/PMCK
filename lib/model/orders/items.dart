@@ -23,7 +23,7 @@ class Item {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
-    data['itemId'] = itemId;
+    data['item_id'] = itemId;
     data['qantity'] = qantity;
     data['price'] = price;
     data['hiddenPrice'] = hiddenPrice;
@@ -33,7 +33,7 @@ class Item {
 
   Item.fromJson(Map<String, dynamic> json) {
     name = json['name'] ?? "";
-    itemId = json['itemId'] as int;
+    itemId = json['item_id'] as int;
     qantity = json['qantity'] as int;
     price = json['price'] as double;
     hiddenPrice = json['hiddenPrice'] as double;
